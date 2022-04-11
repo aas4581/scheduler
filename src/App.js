@@ -1,12 +1,31 @@
 import React from 'react';
+import './App.css';
 
 const Banner = ({ title }) => (
     <h1>{ title }</h1>
   );
 
 const CourseList = ({ courses }) => (
-  <div>
-  { Object.values(courses).map(course => <Course course={ course } />) }
+  <div className="course-list">
+  { Object.values(courses).map(course => <Course key={course.id} course={ course } />) }
+  </div>
+);
+
+
+const App = () =>  (
+    <div className="container">
+      <Banner title={ schedule.title } />
+      <CourseList courses={ schedule.courses } />
+    </div>
+  );
+
+
+const Course = ({ course }) => (
+  <div className="card m-1 p-2">
+    <div className="card-body">
+      <div className="card-title">{ getCourseTerm(course) } CS { getCourseNumber(course) }</div>
+      <div className="card-text">{ course.title }</div>
+    </div>
   </div>
 );
 
@@ -20,13 +39,6 @@ const getCourseTerm = course => (
 const getCourseNumber = course => (
   course.id.slice(1, 4)
 );
-
-const Course = ({ course }) => (
-  <div>
-    { getCourseTerm(course) } CS { getCourseNumber(course) }: { course.title }
-  </div>
-);
-
 
 
 const schedule = {
@@ -55,11 +67,5 @@ const schedule = {
   }
 };
 
-const App = () =>  (
-  <div>
-    <Banner title={ schedule.title } />
-    <CourseList courses={ schedule.courses } />
-  </div>
-);
 
 export default App;
