@@ -3,9 +3,18 @@ import React, { useState } from 'react';
 import Course from './Course.js';
 
 
+const scheduleChanged = (selected, courses) => (
+  selected.some(course => course !== courses[course.id])
+);
+
 const CourseList = ({ courses }) => {
   const [term, setTerm] = useState('Fall');
   const [selected, setSelected] = useState([]);
+
+  if (scheduleChanged(selected, courses)) {
+    setSelected([])
+  };
+  
   const termCourses = Object.values(courses).filter(course => term === getCourseTerm(course));
   
   return (
